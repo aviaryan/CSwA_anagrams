@@ -30,7 +30,7 @@ public class AnagramDictionary {
             String word = line.trim();
             wordList.add(word);
             wordSet.add(word);
-            if (lettersToWord.containsKey(sortLetters(word))){
+            if (lettersToWord.containsKey(sortLetters(word))) {
                 lettersToWord.get(sortLetters(word)).add(word);
             } else {
                 lettersToWord.put(sortLetters(word), new ArrayList<String>(Arrays.asList(word)));
@@ -39,6 +39,12 @@ public class AnagramDictionary {
     }
 
     public boolean isGoodWord(String word, String base) {
+        if (!wordSet.contains(word)){
+            return false;
+        }
+        if (word.contains(base)){
+            return false;
+        }
         return true;
     }
 
@@ -60,7 +66,7 @@ public class AnagramDictionary {
     }
 
     public String pickGoodStarterWord() {
-        return "skate";
+        return "stop";
     }
 
     /*
