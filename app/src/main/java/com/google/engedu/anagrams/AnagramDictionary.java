@@ -22,6 +22,8 @@ public class AnagramDictionary {
     private ArrayList<String> wordList = new ArrayList<>();
     private HashSet<String> wordSet = new HashSet<>();
     private HashMap<String, ArrayList<String>> lettersToWord = new HashMap<String, ArrayList<String>>();
+    private HashMap<Integer, ArrayList<String>> sizeToWords = new HashMap<>();
+    private int wordLength = DEFAULT_WORD_LENGTH;
 
     public AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
@@ -34,6 +36,12 @@ public class AnagramDictionary {
                 lettersToWord.get(sortLetters(word)).add(word);
             } else {
                 lettersToWord.put(sortLetters(word), new ArrayList<String>(Arrays.asList(word)));
+            }
+            // store in length hashmap
+            if (sizeToWords.containsKey(word.length())) {
+                sizeToWords.get(word.length()).add(word);
+            } else {
+                sizeToWords.put(word.length(), new ArrayList<String>(Arrays.asList(word)));
             }
         }
     }
@@ -74,18 +82,22 @@ public class AnagramDictionary {
     }
 
     public String pickGoodStarterWord() {
-        int maxLen = wordList.size();
+        ArrayList<String> wordArray = sizeToWords.get(Math.min(MAX_WORD_LENGTH, wordLength));
+
+        int maxLen = wordArray.size();
         int sp = random.nextInt(maxLen), loopIndex;
         String key;
         for (loopIndex=sp; loopIndex < (maxLen+sp+1); loopIndex++){
-            key = sortLetters(wordList.get(loopIndex % maxLen));
+            key = sortLetters(wordArray.get(loopIndex % maxLen));
             if (lettersToWord.containsKey(key)){
                 if (lettersToWord.get(key).size() >= MIN_NUM_ANAGRAMS){
                     break;
                 }
             }
         }
-        return wordList.get(loopIndex % maxLen);
+
+        wordLength += 1;
+        return wordArray.get(loopIndex % maxLen);
     }
 
     /*
