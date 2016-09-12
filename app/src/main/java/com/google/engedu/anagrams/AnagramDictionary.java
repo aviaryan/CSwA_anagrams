@@ -62,6 +62,14 @@ public class AnagramDictionary {
 
     public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
+        String key;
+        for (char c = 'a'; c <= 'z'; c++){
+            key = sortLetters(word + c);
+            if (lettersToWord.containsKey(key)){
+                Log.d(LOG_TAG, key);
+                result.addAll(lettersToWord.get(key));
+            }
+        }
         return result;
     }
 
