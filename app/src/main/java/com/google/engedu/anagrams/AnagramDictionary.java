@@ -78,6 +78,13 @@ public class AnagramDictionary {
                 result.addAll(lettersToWord.get(key));
             }
         }
+        // delete bad words
+        for (int i = 0; i < result.size(); i++){
+            if (!isGoodWord(result.get(i), word)){
+                result.remove(i);
+                i--;
+            }
+        }
         return result;
     }
 
