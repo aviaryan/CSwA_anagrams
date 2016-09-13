@@ -88,11 +88,9 @@ public class AnagramDictionary {
         int sp = random.nextInt(maxLen), loopIndex;
         String key;
         for (loopIndex=sp; loopIndex < (maxLen+sp+1); loopIndex++){
-            key = sortLetters(wordArray.get(loopIndex % maxLen));
-            if (lettersToWord.containsKey(key)){
-                if (lettersToWord.get(key).size() >= MIN_NUM_ANAGRAMS){
-                    break;
-                }
+            key = wordArray.get(loopIndex % maxLen);
+            if (getAnagramsWithOneMoreLetter(key).size() >= MIN_NUM_ANAGRAMS){
+                break;
             }
         }
 
