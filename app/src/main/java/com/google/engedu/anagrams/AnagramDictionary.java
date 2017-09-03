@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
-public class AnagramDictionary {
+class AnagramDictionary {
 
     private static final int MIN_NUM_ANAGRAMS = 5;
     private static final int DEFAULT_WORD_LENGTH = 3;
@@ -25,7 +25,7 @@ public class AnagramDictionary {
     private HashMap<Integer, ArrayList<String>> sizeToWords = new HashMap<>();
     private int wordLength = DEFAULT_WORD_LENGTH;
 
-    public AnagramDictionary(InputStream wordListStream) throws IOException {
+    AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
         String line;
         while((line = in.readLine()) != null) {
@@ -46,7 +46,7 @@ public class AnagramDictionary {
         }
     }
 
-    public boolean isGoodWord(String word, String base) {
+    boolean isGoodWord(String word, String base) {
         if (!wordSet.contains(word)){
             return false;
         }
@@ -68,7 +68,7 @@ public class AnagramDictionary {
         return result;
     }
 
-    public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
+    ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
         String key;
         for (char c = 'a'; c <= 'z'; c++){
@@ -88,7 +88,7 @@ public class AnagramDictionary {
         return result;
     }
 
-    public String pickGoodStarterWord() {
+    String pickGoodStarterWord() {
         ArrayList<String> wordArray = sizeToWords.get(Math.min(MAX_WORD_LENGTH, wordLength));
 
         int maxLen = wordArray.size();
@@ -108,7 +108,7 @@ public class AnagramDictionary {
     /*
     Helper functions
     */
-    public String sortLetters(String s){
+    private String sortLetters(String s){
         char[] chars = s.toCharArray();
         Arrays.sort(chars);
         return new String(chars);
